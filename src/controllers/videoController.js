@@ -5,14 +5,10 @@ import Video from "../models/Video";
     //     console.log("videos", videos);
     // });
 
-export const home = async(req, res) => {
-    try {
-    const videos = await Video.find({})
-    return res.render("home", { pageTitle: "Home", videos: [] });
-    } catch {
-        return res.render("Server-Error");
-    }
-}
+export const home = async (req, res) => {
+    const videos = await Video.find({});
+    return res.render("home", {pageTitle: "Home", videos})
+};
 export const watch = (req, res) => {
     const { id } = req.params;
     return res.render("watch", {pageTitle: `Watching`});
@@ -32,7 +28,17 @@ export const getUpload = (req, res) => {
 };
 
 export const postUpload = (req, res) => {
-    const {title} = req.body;
-    
+    const {title, description, hashtags} = req.body;
+    const video = new Video({
+        title,
+        description,
+        createdAt: Date.now(),
+        hashtags: hashtags.split(",").map((word) => `#${word}`),
+        meta: {
+            views: 0,
+            rating: 0,
+        }
+    })
+    consol.log(video)
     return res.redirect("/");
 };
