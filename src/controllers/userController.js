@@ -157,4 +157,13 @@ export const postEdit = async (req, res) => {
     req.session.user = updatedUser;
     return res.redirect("/users/edit");
 }
+
+export const getChangePassword = (req, res) => {
+    return res.render("change-password", { pageTitle: "Change Password" });
+}
+export const postChangePassword = (req, res) => {
+    // send notification
+    return res.redirect("/");
+}
+
 export const see = (req, res) => res.send("See User");
